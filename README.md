@@ -1,5 +1,6 @@
 # Experiment 3: Create and Use Classes and Objects to Model APB Packet.
-
+# 212223060068
+# Giri
 ---
 
 ## Aim  
@@ -72,36 +73,63 @@ In this experiment, we use **SystemVerilog OOP concepts** to model an APB packet
 
 ### APB Packet Class (`apb_packet.sv`)  
 ```systemverilog
-// Skeleton code for APB Packet class
-class apb_packet;
+class APB_Packet;
+  rand bit [31:0] PADDR;
+  rand bit [31:0] PWDATA;
+  rand bit        PWRITE;
+  rand bit        PENABLE;
+  bit [31:0]      PRDATA;
 
-  // Declare properties (e.g., address, data, control signals)
+  function new();
+    PADDR   = 0;
+    PWDATA  = 0;
+    PWRITE  = 0;
+    PENABLE = 0;
+    PRDATA  = 0;
+  endfunction
 
-  // Constructor
-
-  // Method to display packet
+  function void display();
+    $display("APB Packet -> PADDR=%0h, PWDATA=%0h, PWRITE=%0b, PENABLE=%0b, PRDATA=%0h",
+              PADDR, PWDATA, PWRITE, PENABLE, PRDATA);
+  endfunction
 endclass
+
 ```
 
 ### APB Packet Class (`apb_tb.sv`) 
 ```systemverilog
-// Skeleton code for APB Packet Testbench
-module apb_tb;
-
-  // Declare object of apb_packet class
+module tb;
+  APB_Packet pkt1, pkt2;
 
   initial begin
-    // Create object
-    // Initialize values
-    // Call display method
-  end
+    pkt1 = new();
+    pkt2 = new();
 
+    pkt1.PADDR   = 32'h1000;
+    pkt1.PWDATA  = 32'hABCD1234;
+    pkt1.PWRITE  = 1;
+    pkt1.PENABLE = 1;
+    pkt1.PRDATA  = 32'h0;
+
+    pkt2.PADDR   = 32'h2000;
+    pkt2.PWDATA  = 32'h11112222;
+    pkt2.PWRITE  = 0;
+    pkt2.PENABLE = 1;
+    pkt2.PRDATA  = 32'hDEADBEEF;
+
+    pkt1.display();
+    pkt2.display();
+
+    $finish;
+  end
 endmodule
+
 ```
 ---
 ### Simulation Output
 
-The simulation is carried out using ModelSim 2020.1.
+<img width="1920" height="1080" alt="Screenshot 2025-09-16 132206" src="https://github.com/user-attachments/assets/48265c28-cc0f-4c86-ae96-eb9f3d3f093b" />
+
 
 Output log will show the APB packet details created using class objects.
 
