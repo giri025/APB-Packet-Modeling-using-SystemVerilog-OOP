@@ -133,7 +133,6 @@ endmodule
 
 Output log will show the APB packet details created using class objects.
 
-(Insert console output screenshot here after simulation)
 
 ---
 
